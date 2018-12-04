@@ -1,5 +1,10 @@
+import db.DBHelper;
+
+import java.sql.ResultSet;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        ResultSet stuList = new DBHelper().getStudentList();
+        System.out.println(stuList);
     }
 }
