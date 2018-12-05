@@ -13,7 +13,7 @@ class DBConnection {
     private PreparedStatement ptmt;
     private ResultSet rs;
 
-    private void Connect() {
+    void Connect() {
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PWD);
@@ -24,7 +24,7 @@ class DBConnection {
     }
 
     // 关闭连接
-    void Close() {
+    public void close() {
         try {
             if (null != conn) {
                 conn.close();
@@ -86,29 +86,42 @@ public class DBHelper extends DBConnection {
     }
 
     // 登录
-    public boolean login(String username, String pwd) {
-        String sql1 = "SELECT username FROM superuser WHERE username='" + username + "' and password='" + pwd + "';";
-        String sql2 = "SELECT sno FROM student WHERE sno='" + username + "' and password='" + pwd + "';";
-
-        ResultSet rs = getQueryMany(sql1, sql2);
+    public int stuLogin(String username, String pwd) {
+        String sql = "SELECT sid FROM student WHERE sno='" + username + "' and password='" + pwd + "';";
+        ResultSet rs = getQuery(sql);
         try {
-            if (null != rs)
-                return rs.next();
+            if (null != rs && rs.next()) {
+                return rs.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return -1;
+    }
+
+    public int superUserLogin(String username, String pwd) {
+        String sql = "SELECT sid FROM superuser WHERE username='" + username + "' and password='" + pwd + "';";
+        ResultSet rs = getQuery(sql);
+        try {
+            if (null != rs && rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 
     // 添加学生信息
-    public int addStuProfile(String sno, String name, String password,
-                             int gender, int classID) {
+    public boolean addStuProfile(String sno, String name, String password,
+                                 int gender, int classID) {
         if (null == sno || null == name || null == password)
-            return -1;
+            return false;
 
         String sql = "INSERT INTO student (sno, sname, password, sgender, class_id) values ('" + sno + "','" + name + "','" + password + "'," + gender + "," + classID + ");";
-        return update(sql);
+        return update(sql) > 0;
     }
 
     // 通过SID查看学生成绩
@@ -124,8 +137,8 @@ public class DBHelper extends DBConnection {
     }
 
     // 修改学生密码
-    public boolean updateStuPWD(String newPWD, int sid) {
-        String sql = "UPDATE student SET password='" + newPWD + "' WHERE sid=" + sid + ";";
+    public boolean updateStuPWD(String newPWD, int id) {
+        String sql = "UPDATE student SET password='" + newPWD + "' WHERE sid=" + id + ";";
         return update(sql) > 0;
     }
 
@@ -195,4 +208,6 @@ public class DBHelper extends DBConnection {
         String sql = "UPDATE class SET name='" + newClassName + "' WHERE cid=" + classID + ";";
         return update(sql) > 0;
     }
+
+
 }
