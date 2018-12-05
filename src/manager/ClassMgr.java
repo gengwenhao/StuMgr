@@ -1,4 +1,4 @@
 package manager;
 
-public class ClassMgr extends BaseMgr {
+public class ClassMgr  {
 }

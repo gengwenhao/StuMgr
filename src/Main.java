@@ -1,6 +1,5 @@
-import db.DBHelper;
+import manager.LoginMgr;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Main {

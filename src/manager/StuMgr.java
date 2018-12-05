@@ -1,4 +1,4 @@
 package manager;
 
-public class StuMgr extends BaseMgr {
+public class StuMgr {
 }

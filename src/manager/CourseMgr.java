@@ -1,5 +1,5 @@
 package manager;
 
-public class CourseMgr extends BaseMgr {
+public class CourseMgr  {
 
 }

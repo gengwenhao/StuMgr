@@ -1,4 +1,4 @@
 package manager;
 
-public class ScoreMgr extends BaseMgr {
+public class ScoreMgr  {
 }
