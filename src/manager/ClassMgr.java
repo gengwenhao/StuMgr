@@ -1,6 +1,6 @@
 package manager;
 
-public class ClassMgr  {
+public class ClassMgr {
     private static ClassMgr instance;
     private static MainStatus status;
 
@@ -16,5 +16,13 @@ public class ClassMgr  {
 
     private ClassMgr() {
 
+    }
+
+    // 添加班级
+    public boolean addClass(String ClassName) {
+        if (status.isSuperuser && status.isLogin) {
+            return status.db.addClass(ClassName);
+        }
+        return false;
     }
 }

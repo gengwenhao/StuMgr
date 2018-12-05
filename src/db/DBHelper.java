@@ -142,6 +142,12 @@ public class DBHelper extends DBConnection {
         return update(sql) > 0;
     }
 
+    // 查看学生基本信息
+    public ResultSet selectStuProfile(int id) {
+        String sql = "SELECT sno,sname,sgender,name FROM student s right join class c on s.class_id=c.cid WHERE sid=" + id + ";";
+        return getQuery(sql);
+    }
+
     // 修改学生班级 UPDATE student SET class_id=1 WHERE sid=0;
     public boolean updateStuClassBySID(int studentID, int newClassID) {
         String sql = "UPDATE student SET class_id=" + newClassID + " WHERE sid=" + studentID + ";";
