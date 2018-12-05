@@ -114,20 +114,85 @@ public class DBHelper extends DBConnection {
     // 通过SID查看学生成绩
     public ResultSet selectStuScorebySID(int sid) {
         String sql = "SELECT * FROM score WHERE student_id=" + sid + ";";
-
         return getQuery(sql);
     }
 
     // 查看学生某一科目成绩
     public ResultSet selectStuScorebySIDandCID(int sid, int cid) {
         String sql = "SELECT * FROM score WHERE student_id=" + sid + " and course_id=" + cid + ";";
-
         return getQuery(sql);
     }
 
+    // 修改学生密码
     public boolean updateStuPWD(String newPWD, int sid) {
         String sql = "UPDATE student SET password='" + newPWD + "' WHERE sid=" + sid + ";";
+        return update(sql) > 0;
+    }
 
+    // 修改学生班级 UPDATE student SET class_id=1 WHERE sid=0;
+    public boolean updateStuClassBySID(int studentID, int newClassID) {
+        String sql = "UPDATE student SET class_id=" + newClassID + " WHERE sid=" + studentID + ";";
+        return update(sql) > 0;
+    }
+
+    //查询成绩排名byCID
+    //SELECT sid, student_id, grade FROM score WHERE course_id=1 ORDER BY grade desc;
+    public ResultSet getScoreRankingByCID(int courseID) {
+        String sql = "SELECT sid, student_id, grade FROM score WHERE course_id=" + courseID + " ORDER BY grade desc;";
+        return getQuery(sql);
+    }
+
+    //查看课程列表
+    //SELECT cname, cperiod_expriment, creidt, ctype FROM course;
+    public ResultSet getCourseList() {
+        String sql = "SELECT cname, cperiod_expriment, creidt, ctype FROM course;";
+        return getQuery(sql);
+    }
+
+    //查询课程byCName
+    //SELECT cid, cname, cperiod_expriment, creidt, ctype FROM course WHERE cname="Python程序设计";
+    public ResultSet selectCourseByCName() {
+        ResultSet rs = null;
+
+        return rs;
+    }
+
+    //添加课程
+    //INSERT INTO course (cname, cperiod_expriment, creidt, ctype) values(
+    //    "Python程序设计", 40, 4, "编程语言"
+    //);
+    public boolean addCourse(String name, int periodExpriment, int creidt, String type) {
+        String sql = "INSERT INTO course (cname, cperiod_expriment, creidt, ctype) values('" + name + "', " + periodExpriment + ", " + creidt + ", '" + type + "');";
+        return update(sql) > 0;
+    }
+
+    //修改课程信息ByCID
+    //UPDATE course SET cname="计算机组成原理", cperiod_expriment=54, creidt=3, ctype="计算机组成原理" WHERE cid=4;
+    public boolean updateCourseInfo(int courseID, String name, int periodExpriment, int creidt, String type) {
+        String sql = "UPDATE course SET cname='" + name + "', cperiod_expriment=" + periodExpriment + ", creidt=" + creidt + ", ctype='" + type + "' WHERE cid=" + courseID + ";";
+        return update(sql) > 0;
+    }
+
+    //查看班级列表
+    //SELECT name FROM class;
+    public ResultSet selectClassList() {
+        String sql = "SELECT name FROM class";
+        return getQuery(sql);
+    }
+
+    //添加班级
+    //INSERT INTO class (name) values(
+    //    "计B181"
+    //);
+    public boolean addClass(String newClassName) {
+        String sql = "INSERT INTO class (name) values('" + newClassName + "');";
+        return update(sql) > 0;
+    }
+
+    //修改班级名称byCID
+    //UPDATE class SET name="软B182" WHERE cid=2;
+    public boolean renameClassByCID(int classID, String newClassName) {
+        String sql = "UPDATE class SET name='" + newClassName + "' WHERE cid=" + classID + ";";
         return update(sql) > 0;
     }
 }
