@@ -18,7 +18,7 @@ public class LoginMgr {
 
     }
 
-    public void login(String username, String password) {
+    public boolean login(String username, String password) {
         int studentID = status.db.stuLogin(username, password);
         int superUserID = status.db.superUserLogin(username, password);
 
@@ -26,6 +26,9 @@ public class LoginMgr {
             status.userID = studentID > superUserID ? studentID : superUserID;
             status.isSuperuser = superUserID > studentID;
             status.isLogin = true;
+            return true;
         }
+
+        return false;
     }
 }
