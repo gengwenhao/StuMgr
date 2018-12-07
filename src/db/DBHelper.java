@@ -82,7 +82,7 @@ class DBConnection {
 public class DBHelper extends DBConnection {
     // 查看学生列表
     public ResultSet getStudentList() {
-        return getQuery("SELECT sid, sno, sname, sgender, sbirthday FROM student;");
+        return getQuery("SELECT sno, sname FROM student;");
     }
 
     // 登录
@@ -116,11 +116,11 @@ public class DBHelper extends DBConnection {
 
     // 添加学生信息
     public boolean addStuProfile(String sno, String name, String password,
-                                 int gender, int classID) {
+                                 int gender, int classID, int age, String address, String email) {
         if (null == sno || null == name || null == password)
             return false;
 
-        String sql = "INSERT INTO student (sno, sname, password, sgender, class_id) values ('" + sno + "','" + name + "','" + password + "'," + gender + "," + classID + ");";
+        String sql = "INSERT INTO student (sno, sname, password, sgender, class_id, age, address, email) values ('" + sno + "','" + name + "','" + password + "'," + gender + "," + classID + "," + age + ",'" + address + "','" + email + "');";
         return update(sql) > 0;
     }
 
@@ -144,13 +144,19 @@ public class DBHelper extends DBConnection {
 
     // 查看学生基本信息
     public ResultSet selectStuProfile(int id) {
-        String sql = "SELECT sno,sname,sgender,name FROM student s right join class c on s.class_id=c.cid WHERE sid=" + id + ";";
+        String sql = "SELECT sno,sname,sgender,name,age,address,email FROM student s right join class c on s.class_id=c.cid WHERE sid=" + id + ";";
         return getQuery(sql);
     }
 
     // 修改学生班级 UPDATE student SET class_id=1 WHERE sid=0;
     public boolean updateStuClassBySID(int studentID, int newClassID) {
         String sql = "UPDATE student SET class_id=" + newClassID + " WHERE sid=" + studentID + ";";
+        return update(sql) > 0;
+    }
+
+    // 修改学生信息
+    public boolean updateStuProfile(int studentID, int age, String address, String mobile, String email) {
+        String sql = "UPDATE student SET age=" + age + ",address='" + address + "',mobile='" + mobile + "',email='" + email + "'  WHERE sid=" + studentID + ";";
         return update(sql) > 0;
     }
 

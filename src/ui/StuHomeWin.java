@@ -1,8 +1,10 @@
 package ui;
 
+import manager.StuMgr;
 import util.WinHelper;
 
 import javax.swing.*;
+import java.sql.ResultSet;
 
 public class StuHomeWin {
     private JTabbedPane tabbedPane1;
@@ -16,7 +18,6 @@ public class StuHomeWin {
     private JTextField name;
     private JTextField age;
     private JTextField sex;
-    private JTextField birthday;
     private JTextField address;
     private JTextField phone;
     private JTextField email;
@@ -24,20 +25,27 @@ public class StuHomeWin {
     private JTable table1;
     private static JFrame frame;
 
+    private void bindEvent() {
+    }
+
+    private void init() {
+        ResultSet profile = StuMgr.getSingleton().getStudentProfile();
+
+    }
+
     public StuHomeWin() {
         frame = new JFrame("StuHomeWin");
         frame.setContentPane(stuHomePanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 450);
+
+        init();
 
         // 居中
         WinHelper.makeFrameToCenter(frame);
         // 绑定事件
-        //bindEvent();
+        bindEvent();
 
         frame.setVisible(true);
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 }

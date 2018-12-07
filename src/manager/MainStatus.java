@@ -10,6 +10,10 @@ public class MainStatus {
     DBHelper db;
     String stuClassName;
 
+    public boolean isStudent() {
+        return !isSuperuser;
+    }
+
     public static MainStatus getSingleton() {
         if (null == instance) {
             instance = new MainStatus();
