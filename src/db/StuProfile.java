@@ -4,31 +4,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StuProfile {
-    int sid;
-    int sno;
-    String name;
-    int gender;
-    int classID;
-    String className;
-    int age;
-    String address;
-    String mobile;
-    String email;
+    public String sno;
+    public String name;
+    public int gender;
+    public int classID;
+    public String className;
+    public int age;
+    public String address;
+    public String mobile;
+    public String email;
 
-    static public StuProfile getProfile(ResultSet rs) {
+    public static StuProfile getProfile(ResultSet rs) {
         try {
             rs.next();
             StuProfile profile = new StuProfile();
-            profile.sid = rs.getInt("sid");
-            profile.sno = rs.getInt("sno");
+            profile.sno = rs.getString("sno");
             profile.name = rs.getString("sname");
             profile.gender = rs.getInt("sgender");
-            profile.classID = rs.getInt("class_id");
-//            profile.className =
+            profile.className = rs.getString("name");
             profile.age = rs.getInt("age");
             profile.address = rs.getString("address");
             profile.mobile = rs.getString("mobile");
             profile.email = rs.getString("email");
+            return profile;
         } catch (SQLException e) {
             e.printStackTrace();
         }

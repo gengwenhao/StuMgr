@@ -51,8 +51,9 @@ public class StuMgr {
 
     // 查看学生信息
     public StuProfile getStudentProfile() {
-        if (!status.isSuperuser && status.isLogin)
+        if (status.isStudent() && status.isLogin) {
             return StuProfile.getProfile(status.db.selectStuProfile(status.userID));
+        }
         return null;
     }
 

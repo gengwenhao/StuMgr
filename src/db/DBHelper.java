@@ -144,7 +144,13 @@ public class DBHelper extends DBConnection {
 
     // 查看学生基本信息
     public ResultSet selectStuProfile(int id) {
-        String sql = "SELECT sno,sname,sgender,name,age,address,email FROM student s right join class c on s.class_id=c.cid WHERE sid=" + id + ";";
+        String sql = "SELECT sno,sname,sgender,name,age,address,mobile,email FROM student s right join class c on s.class_id=c.cid WHERE sid=" + id + ";";
+        return getQuery(sql);
+    }
+
+    // 查看学生选课bySID
+    public ResultSet selectCourseList(int studentID) {
+        String sql = "SELECT cname,cperiod_expriment,credit,ctype FROM course c right join student_course sc on c.cid=sc.cid WHERE sid=" + studentID + ";";
         return getQuery(sql);
     }
 
@@ -168,14 +174,14 @@ public class DBHelper extends DBConnection {
     }
 
     //查看课程列表
-    //SELECT cname, cperiod_expriment, creidt, ctype FROM course;
+    //SELECT cname, cperiod_expriment, credit, ctype FROM course;
     public ResultSet getCourseList() {
-        String sql = "SELECT cname, cperiod_expriment, creidt, ctype FROM course;";
+        String sql = "SELECT cname, cperiod_expriment, credit, ctype FROM course;";
         return getQuery(sql);
     }
 
     //查询课程byCName
-    //SELECT cid, cname, cperiod_expriment, creidt, ctype FROM course WHERE cname="Python程序设计";
+    //SELECT cid, cname, cperiod_expriment, credit, ctype FROM course WHERE cname="Python程序设计";
     public ResultSet selectCourseByCName() {
         ResultSet rs = null;
 
@@ -183,18 +189,18 @@ public class DBHelper extends DBConnection {
     }
 
     //添加课程
-    //INSERT INTO course (cname, cperiod_expriment, creidt, ctype) values(
+    //INSERT INTO course (cname, cperiod_expriment, credit, ctype) values(
     //    "Python程序设计", 40, 4, "编程语言"
     //);
-    public boolean addCourse(String name, int periodExpriment, int creidt, String type) {
-        String sql = "INSERT INTO course (cname, cperiod_expriment, creidt, ctype) values('" + name + "', " + periodExpriment + ", " + creidt + ", '" + type + "');";
+    public boolean addCourse(String name, int periodExpriment, int credit, String type) {
+        String sql = "INSERT INTO course (cname, cperiod_expriment, credit, ctype) values('" + name + "', " + periodExpriment + ", " + credit + ", '" + type + "');";
         return update(sql) > 0;
     }
 
     //修改课程信息ByCID
-    //UPDATE course SET cname="计算机组成原理", cperiod_expriment=54, creidt=3, ctype="计算机组成原理" WHERE cid=4;
-    public boolean updateCourseInfo(int courseID, String name, int periodExpriment, int creidt, String type) {
-        String sql = "UPDATE course SET cname='" + name + "', cperiod_expriment=" + periodExpriment + ", creidt=" + creidt + ", ctype='" + type + "' WHERE cid=" + courseID + ";";
+    //UPDATE course SET cname="计算机组成原理", cperiod_expriment=54, credit=3, ctype="计算机组成原理" WHERE cid=4;
+    public boolean updateCourseInfo(int courseID, String name, int periodExpriment, int credit, String type) {
+        String sql = "UPDATE course SET cname='" + name + "', cperiod_expriment=" + periodExpriment + ", credit=" + credit + ", ctype='" + type + "' WHERE cid=" + courseID + ";";
         return update(sql) > 0;
     }
 

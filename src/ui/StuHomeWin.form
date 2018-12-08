@@ -103,6 +103,7 @@
                           <component id="53770" class="javax.swing.JTable" binding="table1" default-binding="true">
                             <constraints/>
                             <properties>
+                              <autoResizeMode value="2"/>
                               <background color="-2034196"/>
                               <foreground color="-12502992"/>
                             </properties>
@@ -176,7 +177,7 @@
                           <text value="姓名"/>
                         </properties>
                       </component>
-                      <component id="7b1d2" class="javax.swing.JTextField" binding="name">
+                      <component id="7b1d2" class="javax.swing.JTextField" binding="nameField">
                         <constraints>
                           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>
@@ -194,7 +195,7 @@
                           <text value="年龄"/>
                         </properties>
                       </component>
-                      <component id="f3f41" class="javax.swing.JTextField" binding="age">
+                      <component id="f3f41" class="javax.swing.JTextField" binding="ageField">
                         <constraints>
                           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>
@@ -202,7 +203,7 @@
                         </constraints>
                         <properties/>
                       </component>
-                      <component id="2c7f4" class="javax.swing.JTextField" binding="sex">
+                      <component id="2c7f4" class="javax.swing.JTextField" binding="genderField">
                         <constraints>
                           <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>
@@ -228,7 +229,7 @@
                           <text value="地址"/>
                         </properties>
                       </component>
-                      <component id="f8700" class="javax.swing.JTextField" binding="address">
+                      <component id="f8700" class="javax.swing.JTextField" binding="addressField">
                         <constraints>
                           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>
@@ -246,7 +247,7 @@
                           <text value="电话"/>
                         </properties>
                       </component>
-                      <component id="f7cc2" class="javax.swing.JTextField" binding="phone">
+                      <component id="f7cc2" class="javax.swing.JTextField" binding="mobileField">
                         <constraints>
                           <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>
@@ -264,7 +265,7 @@
                           <text value="email"/>
                         </properties>
                       </component>
-                      <component id="2616b" class="javax.swing.JTextField" binding="email">
+                      <component id="2616b" class="javax.swing.JTextField" binding="emailField">
                         <constraints>
                           <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>
@@ -274,7 +275,7 @@
                           <text value=""/>
                         </properties>
                       </component>
-                      <component id="6fe91" class="javax.swing.JTextField" binding="studentClass">
+                      <component id="6fe91" class="javax.swing.JTextField" binding="studentClassField">
                         <constraints>
                           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>
