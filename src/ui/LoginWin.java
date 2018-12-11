@@ -8,6 +8,10 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class LoginWin {
+    final static int WIDTH = 400;
+    final static int HEIGHT = 200;
+    final static boolean RESIZE_ABLE = false;
+
     private JLabel titleLabel;
     private JPasswordField passwordTextField;
     private JButton loginButton;
@@ -117,8 +121,8 @@ public class LoginWin {
     public LoginWin() {
         mainFrame = new JFrame("登录");
         mainFrame.setContentPane(LoginPanel);
-        mainFrame.setSize(400, 220);
-        mainFrame.setResizable(false);
+        mainFrame.setSize(WIDTH, HEIGHT);
+        mainFrame.setResizable(RESIZE_ABLE);
         mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override

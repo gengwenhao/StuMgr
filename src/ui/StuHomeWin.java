@@ -10,15 +10,17 @@ import util.JTableHelper;
 import util.WinHelper;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
-import java.util.Vector;
+
 
 public class StuHomeWin {
+    final static int WIDTH = 850;
+    final static int HEIGHT = 450;
+    final static boolean RESIZE_ABLE = false;
+
     private JTabbedPane tabbedPane1;
     private JTable scoreTable;
     private JLabel nameLabel;
@@ -122,7 +124,8 @@ public class StuHomeWin {
         mainFrame = new JFrame("学生信息主页面");
         mainFrame.setContentPane(stuHomePanel);
         mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        mainFrame.setSize(400, 450);
+        mainFrame.setResizable(RESIZE_ABLE);
+        mainFrame.setSize(WIDTH, HEIGHT);
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
