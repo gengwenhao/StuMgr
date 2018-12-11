@@ -48,6 +48,14 @@ public class StuMgr {
         return false;
     }
 
+    // 修改学生信息
+    public boolean changeStudentProfile(StuProfile profile) {
+        if (!status.isSuperuser && status.isLogin && null != profile) {
+            return status.db.updateStuProfile(status.userID, profile.age, profile.address, profile.mobile, profile.email);
+        }
+        return false;
+    }
+
     // 查看学生信息
     public StuProfile getStudentProfile() {
         if (status.isStudent() && status.isLogin) {

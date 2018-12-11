@@ -40,6 +40,17 @@ public class StuHomeWin {
     private CourseProfile[] courseList;
     private ScoreProfile[] scoreList;
 
+    // 获取当前面板上的学生信息
+    private StuProfile getStuProfile() {
+        StuProfile profile = new StuProfile();
+        profile.age = Integer.parseInt(ageField.getText());
+        profile.address = addressField.getText();
+        profile.email = emailField.getText();
+        profile.mobile = mobileField.getText();
+        return profile;
+    }
+
+
     // 绑定事件
     private void bindEvent() {
 
@@ -49,6 +60,21 @@ public class StuHomeWin {
             public void actionPerformed(ActionEvent e) {
                 new LoginWin();
                 WinHelper.exitCloseDBConnection(mainFrame, false);
+            }
+        });
+
+        // 修改学生信息
+        modifyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean success = StuMgr.getSingleton()
+                        .changeStudentProfile(getStuProfile());
+                if (success) {
+                    JOptionPane.showMessageDialog(mainFrame, "修改成功", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    init();
+                } else {
+                    JOptionPane.showMessageDialog(mainFrame, "修改失败", "提示", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
