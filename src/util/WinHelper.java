@@ -1,3 +1,4 @@
+// 一些修改窗口相关的代码
 package util;
 
 import manager.MainStatus;
@@ -24,10 +25,14 @@ public class WinHelper {
         frame.setLocation(screenWidth / 2 - windowWidth / 2, screenHeight / 2 - windowHeight / 2);
     }
 
-    public static void exitCloseDBConnection(JFrame closeFrame) {
+    public static void exitCloseDBConnection(JFrame closeFrame, boolean closeDB) {
         if (null != closeFrame) {
             MainStatus.logout();
-            MainStatus.close();
+
+            if (closeDB) {
+                MainStatus.close();
+            }
+
             closeFrame.dispose();
         }
     }

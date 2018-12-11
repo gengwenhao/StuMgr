@@ -126,7 +126,7 @@ public class DBHelper extends DBConnection {
 
     // 通过SID查看学生成绩
     public ResultSet selectStuScorebySID(int sid) {
-        String sql = "SELECT * FROM score WHERE student_id=" + sid + ";";
+        String sql = "SELECT cname,grade FROM score s left join course c on s.course_id=c.cid WHERE student_id=" + sid + ";";
         return getQuery(sql);
     }
 
@@ -144,7 +144,7 @@ public class DBHelper extends DBConnection {
 
     // 查看学生基本信息
     public ResultSet selectStuProfile(int id) {
-        String sql = "SELECT sno,sname,sgender,name,age,address,mobile,email FROM student s right join class c on s.class_id=c.cid WHERE sid=" + id + ";";
+        String sql = "SELECT sno,sname,sgender,name,age,address,mobile,email FROM student s left join class c on s.class_id=c.cid WHERE sid=" + id + ";";
         return getQuery(sql);
     }
 

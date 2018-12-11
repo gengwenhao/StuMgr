@@ -18,6 +18,7 @@ public class LoginWin {
 
     // 验证用户和密码的正确性
     private void login(String username, String password) {
+
         // 使用LoginMgr验证登录
         boolean isLogin = LoginMgr.getSingleton().login(username, password);
 
@@ -26,11 +27,8 @@ public class LoginWin {
             JOptionPane.showMessageDialog(mainFrame, "登录成功", "提示", JOptionPane.DEFAULT_OPTION);
 
             // 判断登录类型是学生还是超级管理员
-            boolean isStudent = MainStatus.getSingleton().isStudent();
-            if (isStudent) {
+            if (MainStatus.getSingleton().isStudent()) {
                 new StuHomeWin();
-            } else {
-                // show superuserHomeWin
             }
 
             // 释放登录窗口
@@ -39,10 +37,12 @@ public class LoginWin {
             // 登录失败
             JOptionPane.showMessageDialog(mainFrame, "登录失败", "提示", JOptionPane.DEFAULT_OPTION);
         }
+
     }
 
     // 验证用户和密码的输入合法性
     private int checkUserProfile(String username, String password) {
+
         if ("".equals(username) || username.length() <= 0) {
             JOptionPane.showMessageDialog(mainFrame, "请输入用户名", "提示", JOptionPane.WARNING_MESSAGE);
             return -1;
@@ -50,6 +50,7 @@ public class LoginWin {
             JOptionPane.showMessageDialog(mainFrame, "请输入密码", "提示", JOptionPane.WARNING_MESSAGE);
             return -2;
         }
+
         return 1;
     }
 
@@ -116,12 +117,13 @@ public class LoginWin {
     public LoginWin() {
         mainFrame = new JFrame("登录");
         mainFrame.setContentPane(LoginPanel);
-        mainFrame.setSize(450, 220);
+        mainFrame.setSize(400, 220);
+        mainFrame.setResizable(false);
         mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                WinHelper.exitCloseDBConnection(mainFrame);
+                WinHelper.exitCloseDBConnection(mainFrame, false);
             }
         });
 

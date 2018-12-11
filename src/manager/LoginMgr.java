@@ -6,6 +6,7 @@ public class LoginMgr {
     private static LoginMgr instance;
     private static MainStatus status;
 
+    // 单例模式
     public static LoginMgr getSingleton() {
         if (null == status) {
             status = MainStatus.getSingleton();
@@ -16,10 +17,12 @@ public class LoginMgr {
         return instance;
     }
 
+    // 私有化构造方法
     private LoginMgr() {
 
     }
 
+    // 登录
     public boolean login(String username, String password) {
         if (null == status) {
             status = MainStatus.getSingleton();

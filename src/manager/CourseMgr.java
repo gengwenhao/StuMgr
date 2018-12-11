@@ -8,6 +8,7 @@ public class CourseMgr {
     private static CourseMgr instance;
     private static MainStatus status;
 
+    // 单例模式
     public static CourseMgr getSingleton() {
         if (null == status) {
             status = MainStatus.getSingleton();
@@ -19,6 +20,7 @@ public class CourseMgr {
         return instance;
     }
 
+    // 私有化构造方法
     private CourseMgr() {
     }
 
@@ -53,4 +55,5 @@ public class CourseMgr {
         }
         return null;
     }
+
 }

@@ -1,5 +1,10 @@
 package manager;
 
+import db.CourseProfile;
+import db.ScoreProfile;
+
+import java.sql.ResultSet;
+
 public class ScoreMgr  {
     private static ScoreMgr instance;
     private static MainStatus status;
@@ -16,6 +21,21 @@ public class ScoreMgr  {
 
     private ScoreMgr() {
 
+    }
+
+    public ScoreProfile[] getScoreList() {
+        if (status.isLogin) {
+            return ScoreProfile.getProfile(status.db.selectStuScorebySID(status.userID));
+        }
+        return null;
+    }
+
+    // 查看学生课程
+    public ResultSet getStuCourse() {
+        if (status.isLogin) {
+            return status.db.getCourseList();
+        }
+        return null;
     }
 
 }
