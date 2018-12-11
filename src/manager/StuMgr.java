@@ -3,7 +3,6 @@ package manager;
 import db.StuProfile;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class StuMgr {
     private static StuMgr instance;

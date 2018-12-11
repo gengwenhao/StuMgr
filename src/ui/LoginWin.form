@@ -70,7 +70,7 @@
         </constraints>
         <properties>
           <font name="YouYuan" size="28" style="0"/>
-          <foreground color="-1938284"/>
+          <foreground color="-7166023"/>
           <text value="学生管理系统"/>
         </properties>
       </component>

@@ -1,5 +1,7 @@
 package manager;
 
+import sun.applet.Main;
+
 public class LoginMgr {
     private static LoginMgr instance;
     private static MainStatus status;
@@ -19,6 +21,10 @@ public class LoginMgr {
     }
 
     public boolean login(String username, String password) {
+        if (null == status) {
+            status = MainStatus.getSingleton();
+        }
+
         int studentID = status.db.stuLogin(username, password);
         int superUserID = status.db.superUserLogin(username, password);
 
@@ -30,5 +36,10 @@ public class LoginMgr {
         }
 
         return false;
+    }
+
+    // 登出
+    public void logout() {
+        MainStatus.logout();
     }
 }

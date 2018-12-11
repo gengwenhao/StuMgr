@@ -14,16 +14,16 @@ public class LoginWin {
     private JTextField usernameTextField;
     private JPanel LoginPanel;
     private JButton resetBtn;
-    private static JFrame frame;
+    private static JFrame mainFrame;
 
     // 验证用户和密码的正确性
     private void login(String username, String password) {
         // 使用LoginMgr验证登录
         boolean isLogin = LoginMgr.getSingleton().login(username, password);
 
-        if (isLogin && null != frame) {
+        if (isLogin && null != mainFrame) {
             // 登录成功
-            JOptionPane.showMessageDialog(frame, "登录成功", "提示", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showMessageDialog(mainFrame, "登录成功", "提示", JOptionPane.DEFAULT_OPTION);
 
             // 判断登录类型是学生还是超级管理员
             boolean isStudent = MainStatus.getSingleton().isStudent();
@@ -34,20 +34,20 @@ public class LoginWin {
             }
 
             // 释放登录窗口
-            frame.dispose();
+            mainFrame.dispose();
         } else {
             // 登录失败
-            JOptionPane.showMessageDialog(frame, "登录失败", "提示", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showMessageDialog(mainFrame, "登录失败", "提示", JOptionPane.DEFAULT_OPTION);
         }
     }
 
     // 验证用户和密码的输入合法性
     private int checkUserProfile(String username, String password) {
         if ("".equals(username) || username.length() <= 0) {
-            JOptionPane.showMessageDialog(frame, "请输入用户名", "提示", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(mainFrame, "请输入用户名", "提示", JOptionPane.WARNING_MESSAGE);
             return -1;
         } else if ("".equals(password) || password.length() <= 0) {
-            JOptionPane.showMessageDialog(frame, "请输入密码", "提示", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(mainFrame, "请输入密码", "提示", JOptionPane.WARNING_MESSAGE);
             return -2;
         }
         return 1;
@@ -80,7 +80,7 @@ public class LoginWin {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == 10) {
                     loginButton.doClick();
-                    frame.dispose();
+                    mainFrame.dispose();
                 }
                 super.keyPressed(e);
             }
@@ -114,17 +114,24 @@ public class LoginWin {
     }
 
     public LoginWin() {
-        frame = new JFrame("Login");
-        frame.setContentPane(LoginPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
+        mainFrame = new JFrame("登录");
+        mainFrame.setContentPane(LoginPanel);
+        mainFrame.setSize(450, 220);
+        mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        mainFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                WinHelper.exitCloseDBConnection(mainFrame);
+            }
+        });
 
         // 居中
-        WinHelper.makeFrameToCenter(frame);
+        WinHelper.makeFrameToCenter(mainFrame);
+
         // 绑定事件
         bindEvent();
 
-        frame.setVisible(true);
+        mainFrame.setVisible(true);
     }
 
 }

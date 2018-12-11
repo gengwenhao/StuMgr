@@ -33,4 +33,12 @@ public class MainStatus {
             instance.db.close();
         }
     }
+
+    public static void logout() {
+        if (null != instance) {
+            instance.isLogin = false;
+            instance.isSuperuser = false;
+            instance.stuClassName = "";
+        }
+    }
 }

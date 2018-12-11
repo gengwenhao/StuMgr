@@ -3,14 +3,17 @@ package ui;
 import db.CourseProfile;
 import db.StuProfile;
 import manager.CourseMgr;
+import manager.LoginMgr;
+import manager.MainStatus;
 import manager.StuMgr;
 import util.WinHelper;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-import java.util.Vector;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class StuHomeWin {
     private JTabbedPane tabbedPane1;
@@ -29,15 +32,29 @@ public class StuHomeWin {
     private JTextField emailField;
     private JTextField studentClassField;
     private JTable table1;
-    private static JFrame frame;
+    // 窗口
+    private static JFrame mainFrame;
     private StuProfile profile;
     private CourseProfile[] courseList;
     Object[][] courseTableData;
 
+    // 绑定事件
     private void bindEvent() {
+
+        // 退出登录
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoginWin();
+                WinHelper.exitCloseDBConnection(mainFrame);
+            }
+        });
+
     }
 
+    // 刷新学生信息界面
     private void updateStuProfile() {
+
         if (null == profile) {
             return;
         }
@@ -52,18 +69,9 @@ public class StuHomeWin {
         mobileField.setText(profile.mobile);
         emailField.setText(profile.email);
 
-        if (null != courseList && null != courseTableData) {
-            for (int i = 0; i < courseList.length; i++) {
-                Vector row = new Vector();
-                row.add(courseList[i].name);
-                row.add(courseList[i].periodExpriment);
-                row.add(courseList[i].credit);
-                row.add(courseList[i].type);
-                ((DefaultTableModel) table1.getModel()).addColumn(row);
-            }
-        }
     }
 
+    // 初始化界面
     private void init() {
         profile = StuMgr.getSingleton().getStudentProfile();
         courseList = CourseMgr.getSingleton().getCourseList();
@@ -72,19 +80,26 @@ public class StuHomeWin {
     }
 
     public StuHomeWin() {
-        frame = new JFrame("StuHomeWin");
-        frame.setContentPane(stuHomePanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 450);
+        mainFrame = new JFrame("学生信息主页面");
+        mainFrame.setContentPane(stuHomePanel);
+        mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        mainFrame.setSize(400, 450);
+        mainFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                WinHelper.exitCloseDBConnection(mainFrame);
+            }
+        });
 
         init();
 
         // 居中
-        WinHelper.makeFrameToCenter(frame);
+        WinHelper.makeFrameToCenter(mainFrame);
+
         // 绑定事件
         bindEvent();
 
-        frame.setVisible(true);
+        mainFrame.setVisible(true);
     }
 
     private void createUIComponents() {
