@@ -15,5 +15,7 @@ Swing学生管理系统 沈阳工程学院软B182耿文浩实训项目
 - [x] 学生信息展示
 - [x] 学生分数展示
 - [x] 学生课程展示
+
 ![FYe1h9.png](https://s1.ax1x.com/2018/12/11/FYe1h9.png)
+
 ![FYebuV.png](https://s1.ax1x.com/2018/12/11/FYebuV.png)
