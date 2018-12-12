@@ -1,6 +1,7 @@
 package manager;
 
 import db.StuProfile;
+import db.SuperuserProfile;
 
 import java.sql.ResultSet;
 
@@ -34,7 +35,7 @@ public class StuMgr {
 
     // 修改学生密码
     public boolean changeStudentPassword(String newPassword) {
-        if (!status.isSuperuser && status.isLogin) {
+        if (!status._IsSuperuser && status.isLogin) {
             return status.db.updateStuPWD(newPassword, status.userID);
         }
         return false;
@@ -42,7 +43,7 @@ public class StuMgr {
 
     // 修改学生信息
     public boolean changeStudentProfile(int age, String address, String mobile, String email) {
-        if (!status.isSuperuser && status.isLogin) {
+        if (!status._IsSuperuser && status.isLogin) {
             return status.db.updateStuProfile(status.userID, age, address, mobile, email);
         }
         return false;
@@ -50,7 +51,7 @@ public class StuMgr {
 
     // 修改学生信息
     public boolean changeStudentProfile(StuProfile profile) {
-        if (!status.isSuperuser && status.isLogin && null != profile) {
+        if (!status._IsSuperuser && status.isLogin && null != profile) {
             return status.db.updateStuProfile(status.userID, profile.age, profile.address, profile.mobile, profile.email);
         }
         return false;
@@ -60,6 +61,14 @@ public class StuMgr {
     public StuProfile getStudentProfile() {
         if (status.isStudent() && status.isLogin) {
             return StuProfile.getProfile(status.db.selectStuProfile(status.userID));
+        }
+        return null;
+    }
+
+    // 查看管理员信息
+    public SuperuserProfile getSuperuserProfile() {
+        if (status._IsSuperuser && status.isLogin) {
+            return SuperuserProfile.getProfile(status.db.selectSuperuserProfile(status.userID));
         }
         return null;
     }

@@ -1,7 +1,5 @@
 package manager;
 
-import sun.applet.Main;
-
 public class LoginMgr {
     private static LoginMgr instance;
     private static MainStatus status;
@@ -33,7 +31,7 @@ public class LoginMgr {
 
         if (-1 != studentID || -1 != superUserID) {
             status.userID = studentID > superUserID ? studentID : superUserID;
-            status.isSuperuser = superUserID > studentID;
+            status._IsSuperuser = superUserID > studentID;
             status.isLogin = true;
             return true;
         }

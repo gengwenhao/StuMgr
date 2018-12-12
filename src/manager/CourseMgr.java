@@ -1,6 +1,7 @@
 package manager;
 
 import db.CourseProfile;
+import db.ScoreProfile;
 
 import java.sql.ResultSet;
 
@@ -26,7 +27,7 @@ public class CourseMgr {
 
     // 添加课程
     public boolean addCourse(String name, int periodExpriment, int credit, String type) {
-        if (status.isSuperuser && status.isLogin) {
+        if (status._IsSuperuser && status.isLogin) {
             return status.db.addCourse(name, periodExpriment, credit, type);
         }
         return false;
@@ -34,7 +35,7 @@ public class CourseMgr {
 
     // 修改课程
     public boolean updateCourse(int courseID, String name, int periodExpriment, int credit, String type) {
-        if (status.isSuperuser && status.isLogin) {
+        if (status._IsSuperuser && status.isLogin) {
             return status.db.updateCourseInfo(courseID, name, periodExpriment, credit, type);
         }
         return false;
@@ -48,12 +49,19 @@ public class CourseMgr {
         return null;
     }
 
-    // 查看学生课程
-    public ResultSet getStuCourse() {
+    // 查看所有课程
+    public CourseProfile[] getAllCourseList() {
         if (status.isLogin) {
-            return status.db.getCourseList();
+            return CourseProfile.getProfile(status.db.getCourseList());
         }
         return null;
+    }
+
+    // 查看课程下所有学生分数
+    public ScoreProfile getScoreByCID() {
+        if(status.isLogin&&status.isSuperuser()){
+            return ScoreMgr.getProfile();
+        }
     }
 
 }

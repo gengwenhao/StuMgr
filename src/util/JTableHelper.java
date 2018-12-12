@@ -47,4 +47,23 @@ public class JTableHelper {
         DefaultTableModel model = new DefaultTableModel(vData, vName);
         table.setModel(model);
     }
+
+    public static void addScoreDetailToJTable(JTable table, String[] nameList, ScoreProfile[] scoreList) {
+        Vector vData = new Vector();
+        Vector vName = new Vector();
+
+        for (String colName : nameList) {
+            vName.add(colName);
+        }
+
+        for (ScoreProfile profile : scoreList) {
+            Vector vRow = new Vector();
+            vRow.add(profile.courseName);
+            vRow.add(profile.grade);
+            vData.add(vRow.clone());
+        }
+
+        DefaultTableModel model = new DefaultTableModel(vData, vName);
+        table.setModel(model);
+    }
 }

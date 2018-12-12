@@ -70,6 +70,7 @@
                         <constraints/>
                         <properties>
                           <background color="-2034196"/>
+                          <enabled value="false"/>
                           <foreground color="-12502992"/>
                         </properties>
                       </component>
@@ -105,6 +106,7 @@
                             <properties>
                               <autoResizeMode value="2"/>
                               <background color="-2034196"/>
+                              <enabled value="false"/>
                               <foreground color="-12502992"/>
                             </properties>
                           </component>

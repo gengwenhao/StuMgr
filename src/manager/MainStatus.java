@@ -5,20 +5,24 @@ import db.DBHelper;
 public class MainStatus {
     private static MainStatus instance;
     boolean isLogin;
-    boolean isSuperuser;
+    boolean _IsSuperuser;
     int userID;
     DBHelper db;
     String stuClassName;
 
     public boolean isStudent() {
-        return !isSuperuser;
+        return !_IsSuperuser;
+    }
+
+    public boolean isSuperuser(){
+        return _IsSuperuser;
     }
 
     public static MainStatus getSingleton() {
         if (null == instance) {
             instance = new MainStatus();
             instance.isLogin = false;
-            instance.isSuperuser = false;
+            instance._IsSuperuser = false;
             instance.stuClassName = "";
             instance.db = new DBHelper();
         }
@@ -37,7 +41,7 @@ public class MainStatus {
     public static void logout() {
         if (null != instance) {
             instance.isLogin = false;
-            instance.isSuperuser = false;
+            instance._IsSuperuser = false;
             instance.stuClassName = "";
         }
     }

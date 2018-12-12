@@ -20,7 +20,7 @@ public class ClassMgr {
 
     // 添加班级
     public boolean addClass(String ClassName) {
-        if (status.isSuperuser && status.isLogin) {
+        if (status._IsSuperuser && status.isLogin) {
             return status.db.addClass(ClassName);
         }
         return false;

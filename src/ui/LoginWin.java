@@ -33,6 +33,8 @@ public class LoginWin {
             // 判断登录类型是学生还是超级管理员
             if (MainStatus.getSingleton().isStudent()) {
                 new StuHomeWin();
+            } else if (MainStatus.getSingleton().isSuperuser()) {
+                new SuperuserHomeWin();
             }
 
             // 释放登录窗口

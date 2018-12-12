@@ -5,10 +5,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CourseProfile {
+    public String id;
     public String name;
     public int periodExpriment;
     public int credit;
     public String type;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                "\nname: " + name +
+                "\nperiodExpriment: " + periodExpriment +
+                "\ncredit: " + credit +
+                "\ntype: " + type;
+    }
 
     public static CourseProfile[] getProfile(ResultSet rs) {
         ArrayList<CourseProfile> li = new ArrayList<CourseProfile>();
@@ -17,6 +27,7 @@ public class CourseProfile {
 
             while (rs.next()) {
                 CourseProfile profile = new CourseProfile();
+                profile.id = rs.getString("cid");
                 profile.name = rs.getString("cname");
                 profile.periodExpriment = rs.getInt("cperiod_expriment");
                 profile.credit = rs.getInt("credit");

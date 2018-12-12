@@ -20,6 +20,7 @@ public class StuHomeWin {
     final static int WIDTH = 850;
     final static int HEIGHT = 450;
     final static boolean RESIZE_ABLE = false;
+    final static String TITLE = "学生信息主页面";
 
     private JTabbedPane tabbedPane1;
     private JTable scoreTable;
@@ -52,7 +53,6 @@ public class StuHomeWin {
         return profile;
     }
 
-
     // 绑定事件
     private void bindEvent() {
 
@@ -82,9 +82,8 @@ public class StuHomeWin {
 
     }
 
-
     // 刷新学生信息界面
-    private void updateStuProfile() {
+    private void updateProfile() {
 
         if (null == profile || null == courseTable) {
             return;
@@ -102,12 +101,12 @@ public class StuHomeWin {
         emailField.setText(profile.email);
 
         // 添加课程信息
-        String[] courseArr = new String[]{"名称", "学时", "学分", "类型"};
-        JTableHelper.addCourseProfileToJTable(courseTable, courseArr, courseList);
+        JTableHelper.addCourseProfileToJTable(
+                courseTable, new String[]{"名称", "学时", "学分", "类型"}, courseList);
 
         // 添加课程信息
-        String[] scoreArr = new String[]{"课程名称", "课程分数"};
-        JTableHelper.addScoreProfileToJTable(scoreTable, scoreArr, scoreList);
+        JTableHelper.addScoreProfileToJTable(
+                scoreTable, new String[]{"课程名称", "课程分数"}, scoreList);
 
     }
 
@@ -117,11 +116,11 @@ public class StuHomeWin {
         courseList = CourseMgr.getSingleton().getCourseList();
         scoreList = ScoreMgr.getSingleton().getScoreList();
 
-        updateStuProfile();
+        updateProfile();
     }
 
     public StuHomeWin() {
-        mainFrame = new JFrame("学生信息主页面");
+        mainFrame = new JFrame(TITLE);
         mainFrame.setContentPane(stuHomePanel);
         mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainFrame.setResizable(RESIZE_ABLE);

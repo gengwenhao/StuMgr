@@ -4,8 +4,10 @@ import db.CourseProfile;
 import db.ScoreProfile;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class ScoreMgr  {
+public class ScoreMgr {
     private static ScoreMgr instance;
     private static MainStatus status;
 
@@ -35,6 +37,27 @@ public class ScoreMgr  {
         if (status.isLogin) {
             return status.db.getCourseList();
         }
+        return null;
+    }
+
+    public static ScoreProfile[] getProfile(ResultSet rs) {
+        ArrayList<ScoreProfile> li = new ArrayList<ScoreProfile>();
+
+        try {
+
+            while (rs.next()) {
+                ScoreProfile profile = new ScoreProfile();
+                profile.courseName = rs.getString("cname");
+                profile.grade = rs.getString("grade");
+                li.add(profile);
+            }
+
+            return (ScoreProfile[]) li.toArray(new ScoreProfile[li.size()]);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 

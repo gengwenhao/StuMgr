@@ -148,6 +148,12 @@ public class DBHelper extends DBConnection {
         return getQuery(sql);
     }
 
+    // 查看管理员信息
+    public ResultSet selectSuperuserProfile(int id) {
+        String sql = "SELECT username FROM superuser WHERE sid='" + id + "';";
+        return getQuery(sql);
+    }
+
     // 查看学生选课bySID
     public ResultSet selectCourseList(int studentID) {
         String sql = "SELECT cname,cperiod_expriment,credit,ctype FROM course c right join student_course sc on c.cid=sc.cid WHERE sid=" + studentID + ";";
@@ -176,7 +182,7 @@ public class DBHelper extends DBConnection {
     //查看课程列表
     //SELECT cname, cperiod_expriment, credit, ctype FROM course;
     public ResultSet getCourseList() {
-        String sql = "SELECT cname, cperiod_expriment, credit, ctype FROM course;";
+        String sql = "SELECT cid, cname, cperiod_expriment, credit, ctype FROM course;";
         return getQuery(sql);
     }
 
