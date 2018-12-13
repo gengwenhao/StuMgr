@@ -3,8 +3,6 @@ package manager;
 import db.CourseProfile;
 import db.ScoreProfile;
 
-import java.sql.ResultSet;
-
 public class CourseMgr {
     private static CourseMgr instance;
     private static MainStatus status;
@@ -58,10 +56,11 @@ public class CourseMgr {
     }
 
     // 查看课程下所有学生分数
-    public ScoreProfile getScoreByCID() {
-        if(status.isLogin&&status.isSuperuser()){
-            return ScoreMgr.getProfile();
+    public ScoreProfile[] getScoreByCID(int cid) {
+        if (status.isLogin && status.isSuperuser()) {
+            return ScoreProfile.getProfile(status.db.selectStuScoreByCID(cid));
         }
+        return null;
     }
 
 }

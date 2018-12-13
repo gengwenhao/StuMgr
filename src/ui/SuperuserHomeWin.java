@@ -20,39 +20,32 @@ public class SuperuserHomeWin {
 
     private JButton exitButton;
     private JLabel nameLabel;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane mainPanel;
     private JPanel superuserHomePanel;
-    private JButton addOneRowCourseButton;
-    private JButton deleteOneRowCourseButton;
-    private JButton addOneRowTeacherButton1;
-    private JButton deleteOneRowTeacherButton1;
     private JButton saveCourseButton;
-    private JButton saveTeacherButton;
-    private JButton addOneStudentRowButton;
     private JButton saveStudentTableButton;
-    private JButton deleteOneStudentRowButton;
     private JButton cleanButton;
-    private JButton statisticButton;
-    private JTabbedPane tabbedPane2;
-    private JButton updateButton;
     private JTable courseListTable;
     private JTable stuScoreDetailTable;
-    private JTable course;
-    private JTable studentClass;
-    private JTable student;
-    private JTable time;
-    private JTable table1;
-    private JTable table2;
+    private JTable newCourseTable;
     private JTable table3;
     private JTable table4;
+    private JTable courseScoreTable;
+    private JScrollPane courseScorePanel;
     private static JFrame mainFrame;
 
     private SuperuserProfile superuserProfile;
     private CourseProfile[] courseProfiles;
-    private ScoreProfile scoreProfile;
+    private ScoreProfile[] scoreProfile;
 
-    private void updateScoreDetailByCID(String cid) {
-        scoreProfile = ScoreMgr.getSingleton().
+    // 更新 《该课程学成成绩》 表格
+    private void updateCourseScoreTable(String courseID) {
+        scoreProfile = ScoreMgr.getSingleton().getCourseScoreList(Integer.parseInt(courseID));
+        JTableHelper.addScoreDetailToJTable(
+                courseScoreTable,
+                new String[]{"姓名", "分数", "学号"},
+                scoreProfile);
+
     }
 
     // 绑定事件
@@ -75,6 +68,7 @@ public class SuperuserHomeWin {
                     //获得行位置
                     int row = ((JTable) e.getSource()).rowAtPoint(e.getPoint());
                     System.out.println("双击了\n" + courseProfiles[row] + "\n");
+                    updateCourseScoreTable(courseProfiles[row].id);
                 }
             }
         });

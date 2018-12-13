@@ -1,6 +1,5 @@
 package manager;
 
-import db.CourseProfile;
 import db.ScoreProfile;
 
 import java.sql.ResultSet;
@@ -25,40 +24,21 @@ public class ScoreMgr {
 
     }
 
+    // 查看学生分数
     public ScoreProfile[] getScoreList() {
         if (status.isLogin) {
-            return ScoreProfile.getProfile(status.db.selectStuScorebySID(status.userID));
+            return ScoreProfile.getProfile(status.db.selectStuScoreBySID(status.userID));
         }
         return null;
     }
 
-    // 查看学生课程
-    public ResultSet getStuCourse() {
+    // 查看课程分数
+    public ScoreProfile[] getCourseScoreList(int courseID) {
         if (status.isLogin) {
-            return status.db.getCourseList();
+            return ScoreProfile.getProfile(status.db.selectStuScoreByCID(courseID));
         }
         return null;
     }
 
-    public static ScoreProfile[] getProfile(ResultSet rs) {
-        ArrayList<ScoreProfile> li = new ArrayList<ScoreProfile>();
-
-        try {
-
-            while (rs.next()) {
-                ScoreProfile profile = new ScoreProfile();
-                profile.courseName = rs.getString("cname");
-                profile.grade = rs.getString("grade");
-                li.add(profile);
-            }
-
-            return (ScoreProfile[]) li.toArray(new ScoreProfile[li.size()]);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
 }

@@ -58,8 +58,9 @@ public class JTableHelper {
 
         for (ScoreProfile profile : scoreList) {
             Vector vRow = new Vector();
-            vRow.add(profile.courseName);
+            vRow.add(profile.stuName);
             vRow.add(profile.grade);
+            vRow.add(profile.stuNumber);
             vData.add(vRow.clone());
         }
 
