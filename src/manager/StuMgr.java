@@ -25,6 +25,12 @@ public class StuMgr {
         return status.db.addStuProfile(sno, name, password, gender, classID, age, address, email);
     }
 
+    // 添加学生
+    public boolean addStudent(int classID, StuProfile profile) {
+        return status.db.addStuProfile(profile.sno, profile.name,
+                profile.password, profile.gender, classID, profile.age, profile.address, profile.email);
+    }
+
     // 查看学生列表
     public ResultSet getStudentList() {
         if (status.isLogin) {

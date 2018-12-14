@@ -1,9 +1,6 @@
 package ui;
 
-import db.ClassProfile;
-import db.CourseProfile;
-import db.ScoreProfile;
-import db.SuperuserProfile;
+import db.*;
 import manager.ClassMgr;
 import manager.CourseMgr;
 import manager.ScoreMgr;
@@ -117,6 +114,7 @@ public class SuperuserHomeWin {
 
                 if (createdSuccess) {
                     JOptionPane.showMessageDialog(mainFrame, "保存成功", "提示", JOptionPane.DEFAULT_OPTION);
+                    // 清空输入信息
                     JTableHelper.addTitleToJTable(newCourseTable, NEW_COURSE_DETAIL_TITLE);
                     init();
                 }
@@ -127,7 +125,16 @@ public class SuperuserHomeWin {
         saveStudentTableButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StuMgr.getSingleton().addStudent()
+                int classID = JComboBoxHelper.loadJComboBoxtoClassID(classComboBox, classProfiles);
+                StuProfile stuProfile = JTableHelper.loadJTableToStuProfile(studentDetailProfileTable);
+
+                boolean createdSuccess = StuMgr.getSingleton().addStudent(classID, stuProfile);
+                if (createdSuccess) {
+                    JOptionPane.showMessageDialog(mainFrame, "保存成功", "提示", JOptionPane.DEFAULT_OPTION);
+                    // 清空输入信息
+                    JTableHelper.addTitleToJTable(newCourseTable, NEW_COURSE_DETAIL_TITLE);
+                    init();
+                }
             }
         });
     }
@@ -142,7 +149,7 @@ public class SuperuserHomeWin {
         // 设置管理员信息
         nameLabel.setText(superuserProfile.username);
 
-        // 添加所有课程信息
+        // 显示课程列表
         JTableHelper.addCourseProfileToJTable(courseListTable, new String[]{"名称", "学时", "学分", "类型"}, courseProfiles);
 
     }

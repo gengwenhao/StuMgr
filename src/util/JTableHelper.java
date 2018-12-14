@@ -2,6 +2,7 @@ package util;
 
 import db.CourseProfile;
 import db.ScoreProfile;
+import db.StuProfile;
 import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
 
 import javax.swing.*;
@@ -83,6 +84,25 @@ public class JTableHelper {
 
         DefaultTableModel model = new DefaultTableModel(vData, vName);
         table.setModel(model);
+    }
+
+    public static StuProfile loadJTableToStuProfile(JTable table) {
+        StuProfile profile = new StuProfile();
+
+        profile.sno = (String) table.getValueAt(0, 0);
+        profile.name = (String) table.getValueAt(0, 1);
+        profile.password = (String) table.getValueAt(0, 2);
+
+        // 处理性别
+        String gender = (String) table.getValueAt(0, 3);
+        profile.gender = gender.contains("男") ? 1 : 0;
+
+        profile.age = Integer.parseInt((String) table.getValueAt(0, 4));
+        profile.address = (String) table.getValueAt(0, 5);
+        profile.mobile = (String) table.getValueAt(0, 6);
+        profile.email = (String) table.getValueAt(0, 7);
+
+        return profile;
     }
 
     // 通过表格对象和类的字段信息返回实例列表

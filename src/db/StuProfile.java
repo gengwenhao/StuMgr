@@ -14,6 +14,7 @@ public class StuProfile {
     public String address;
     public String mobile;
     public String email;
+    public String password;
 
     public static StuProfile getProfile(ResultSet rs) {
         try {

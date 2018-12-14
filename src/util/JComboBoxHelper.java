@@ -22,4 +22,8 @@ public class JComboBoxHelper {
             comboBox.addItem(profile);
         }
     }
+
+    public static int loadJComboBoxtoClassID(JComboBox comboBox, ClassProfile[] profiles) {
+        return Integer.parseInt(profiles[comboBox.getSelectedIndex()].id);
+    }
 }
