@@ -13,11 +13,7 @@ public class CourseProfile {
 
     @Override
     public String toString() {
-        return "id: " + id +
-                "\nname: " + name +
-                "\nperiodExpriment: " + periodExpriment +
-                "\ncredit: " + credit +
-                "\ntype: " + type;
+        return name;
     }
 
     public static CourseProfile[] getProfile(ResultSet rs) {

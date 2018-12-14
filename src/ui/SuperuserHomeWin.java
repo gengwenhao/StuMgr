@@ -23,6 +23,12 @@ public class SuperuserHomeWin {
     final static String[] NEW_COURSE_DETAIL_TITLE = new String[]{
             "*课程名称", "*学时", "*学分", "*课程类型"
     };
+    final static String[] NEW_CLASS_DETAIL_TITLE = new String[]{
+            "*班级名称"
+    };
+    final static String[] NEW_SCORE_DETAIL_TITLE = new String[]{
+            "*分数"
+    };
 
     private JButton exitButton;
     private JLabel nameLabel;
@@ -30,22 +36,27 @@ public class SuperuserHomeWin {
     private JPanel superuserHomePanel;
     private JButton saveCourseButton;
     private JButton saveStudentTableButton;
-    private JButton cleanButton;
+    private JButton saveScoreBtn;
     private JTable courseListTable;
     private JTable stuScoreDetailTable;
     private JTable newCourseTable;
     private JTable studentDetailProfileTable;
-    private JTable table4;
+    private JTable addScoreTable;
     private JTable courseScoreTable;
     private JScrollPane courseScorePanel;
     private JComboBox classComboBox;
     private JButton refreshBtn;
+    private JTable newClassTable;
+    private JComboBox courseComboBox;
+    private JComboBox stuComboBox;
+    private JButton classSaveBtn;
     private static JFrame mainFrame;
 
     private SuperuserProfile superuserProfile;
     private CourseProfile[] courseProfiles;
     private ScoreProfile[] scoreProfile;
     private ClassProfile[] classProfiles;
+    private StuProfile[] stuProfiles;
 
     // 更新 《该课程成绩》 表格
     private void updateCourseScoreTable(String courseID) {
@@ -125,7 +136,7 @@ public class SuperuserHomeWin {
         saveStudentTableButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int classID = JComboBoxHelper.loadJComboBoxtoClassID(classComboBox, classProfiles);
+                int classID = JComboBoxHelper.loadJComboBoxToClassID(classComboBox, classProfiles);
                 StuProfile stuProfile = JTableHelper.loadJTableToStuProfile(studentDetailProfileTable);
 
                 boolean createdSuccess = StuMgr.getSingleton().addStudent(classID, stuProfile);
@@ -133,6 +144,50 @@ public class SuperuserHomeWin {
                     JOptionPane.showMessageDialog(mainFrame, "保存成功", "提示", JOptionPane.DEFAULT_OPTION);
                     // 清空输入信息
                     JTableHelper.addTitleToJTable(newCourseTable, NEW_COURSE_DETAIL_TITLE);
+                    init();
+                }
+            }
+        });
+
+        // 保存成绩按钮点击事件
+        saveScoreBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int courseID = JComboBoxHelper.loadJComboBoxToCourseID(courseComboBox, courseProfiles);
+                int stuID = JComboBoxHelper.loadJComboBoxToStuID(stuComboBox, stuProfiles);
+                int grade = JTableHelper.loadJTableToGrade(addScoreTable);
+
+                if (-1 == grade) {
+                    JOptionPane.showMessageDialog(mainFrame, "请在分数框回车后再保存", "提示", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
+
+                boolean createdSuccess = ScoreMgr.getSingleton().addScoreProfile(stuID, courseID, grade);
+                if (createdSuccess) {
+                    JOptionPane.showMessageDialog(mainFrame, "保存成功", "提示", JOptionPane.DEFAULT_OPTION);
+                    // 清空输入信息
+                    JTableHelper.addTitleToJTable(newCourseTable, NEW_COURSE_DETAIL_TITLE);
+                    init();
+                }
+            }
+        });
+
+        // 保存班级按钮点击事件
+        classSaveBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String className = JTableHelper.loadJTableToClassName(newClassTable);
+
+                if ("".equals(className)) {
+                    JOptionPane.showMessageDialog(mainFrame, "请在班级名称输入出回车后再保存", "提示", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
+
+                boolean createdSuccess = ClassMgr.getSingleton().addClass(className);
+                if (createdSuccess) {
+                    JOptionPane.showMessageDialog(mainFrame, "保存成功", "提示", JOptionPane.DEFAULT_OPTION);
+                    // 清空输入信息
+                    JTableHelper.addTitleToJTable(newClassTable, NEW_CLASS_DETAIL_TITLE);
                     init();
                 }
             }
@@ -160,11 +215,18 @@ public class SuperuserHomeWin {
         superuserProfile = StuMgr.getSingleton().getSuperuserProfile();
         courseProfiles = CourseMgr.getSingleton().getAllCourseList();
         classProfiles = ClassMgr.getSingleton().getAllClassList();
+        stuProfiles = StuMgr.getSingleton().getStudentList();
 
         // 给表格设置标题
         JTableHelper.addTitleToJTable(studentDetailProfileTable, NEW_STUDENT_DETAIL_TITLE);
         JTableHelper.addTitleToJTable(newCourseTable, NEW_COURSE_DETAIL_TITLE);
+        JTableHelper.addTitleToJTable(newClassTable, NEW_CLASS_DETAIL_TITLE);
+        JTableHelper.addTitleToJTable(addScoreTable, NEW_SCORE_DETAIL_TITLE);
+
+        // 给复选框添加内容
         JComboBoxHelper.addClassProfilesToJComboBox(classComboBox, classProfiles);
+        JComboBoxHelper.addCourseProfilesToJComboBox(courseComboBox, courseProfiles);
+        JComboBoxHelper.addStuProfilesToJComboBox(stuComboBox, stuProfiles);
 
         setWinProfile();
     }

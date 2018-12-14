@@ -105,6 +105,15 @@ public class JTableHelper {
         return profile;
     }
 
+    public static int loadJTableToGrade(JTable table) {
+        String gradeStr = (String) table.getValueAt(0, 0);
+        return null == gradeStr ? -1 : Integer.parseInt(gradeStr);
+    }
+
+    public static String loadJTableToClassName(JTable table) {
+        return (String) table.getValueAt(0, 0);
+    }
+
     // 通过表格对象和类的字段信息返回实例列表
     public static String[][] loadJTableToProfile(JTable table, int row) {
         // 全部数据

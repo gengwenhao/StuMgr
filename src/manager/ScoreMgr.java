@@ -40,5 +40,14 @@ public class ScoreMgr {
         return null;
     }
 
+    // 添加分数
+    public boolean addScoreProfile(int stuID, int courseID, int grade) {
+        if (status.isLogin) {
+            return status.db.addScoreProfile(stuID, courseID, grade);
+        }
+
+        return false;
+    }
+
 
 }

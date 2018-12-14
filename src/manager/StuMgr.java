@@ -32,9 +32,9 @@ public class StuMgr {
     }
 
     // 查看学生列表
-    public ResultSet getStudentList() {
+    public StuProfile[] getStudentList() {
         if (status.isLogin) {
-            return status.db.getStudentList();
+            return StuProfile.getProfiles(status.db.getStudentList());
         }
         return null;
     }

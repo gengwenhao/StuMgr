@@ -82,7 +82,7 @@ class DBConnection {
 public class DBHelper extends DBConnection {
     // 查看学生列表
     public ResultSet getStudentList() {
-        return getQuery("SELECT sid,sno, sname FROM student;");
+        return getQuery("SELECT * FROM student s left join class c on s.sid=c.cid;");
     }
 
     // 登录
@@ -128,6 +128,12 @@ public class DBHelper extends DBConnection {
     public ResultSet selectStuScoreBySID(int sid) {
         String sql = "SELECT * FROM score sc left join student st on sc.student_id=st.sid join course co on sc.course_id=co.cid WHERE student_id=" + sid + ";";
         return getQuery(sql);
+    }
+
+    // 添加学生成绩
+    public boolean addScoreProfile(int stuID, int courseID, int grade) {
+        String sql = "INSERT INTO score (student_id,course_id,grade) values (" + stuID + "," + courseID + "," + grade + ")";
+        return update(sql) > 0;
     }
 
     // 查看科目成绩
