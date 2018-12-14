@@ -1,11 +1,14 @@
 package ui;
 
+import db.ClassProfile;
 import db.CourseProfile;
 import db.ScoreProfile;
 import db.SuperuserProfile;
+import manager.ClassMgr;
 import manager.CourseMgr;
 import manager.ScoreMgr;
 import manager.StuMgr;
+import util.JComboBoxHelper;
 import util.JTableHelper;
 import util.WinHelper;
 
@@ -17,6 +20,12 @@ public class SuperuserHomeWin {
     final static int HEIGHT = 450;
     final static boolean RESIZE_ABLE = false;
     final static String TITLE = "管理员界面";
+    final static String[] NEW_STUDENT_DETAIL_TITLE = new String[]{
+            "*学号", "*姓名", "*密码", "性别", "年龄", "地址", "手机号", "邮箱"
+    };
+    final static String[] NEW_COURSE_DETAIL_TITLE = new String[]{
+            "*课程名称", "*学时", "*学分", "*课程类型"
+    };
 
     private JButton exitButton;
     private JLabel nameLabel;
@@ -28,17 +37,20 @@ public class SuperuserHomeWin {
     private JTable courseListTable;
     private JTable stuScoreDetailTable;
     private JTable newCourseTable;
-    private JTable table3;
+    private JTable studentDetailProfileTable;
     private JTable table4;
     private JTable courseScoreTable;
     private JScrollPane courseScorePanel;
+    private JComboBox classComboBox;
+    private JButton refreshBtn;
     private static JFrame mainFrame;
 
     private SuperuserProfile superuserProfile;
     private CourseProfile[] courseProfiles;
     private ScoreProfile[] scoreProfile;
+    private ClassProfile[] classProfiles;
 
-    // 更新 《该课程学成成绩》 表格
+    // 更新 《该课程成绩》 表格
     private void updateCourseScoreTable(String courseID) {
         scoreProfile = ScoreMgr.getSingleton().getCourseScoreList(Integer.parseInt(courseID));
         JTableHelper.addScoreDetailToJTable(
@@ -50,8 +62,15 @@ public class SuperuserHomeWin {
 
     // 绑定事件
     private void bindEvent() {
+        // 刷新按钮点击事件
+        refreshBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                init();
+            }
+        });
 
-        // 退出登录
+        // 退出登录按钮点击事件
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -60,23 +79,61 @@ public class SuperuserHomeWin {
             }
         });
 
-        // 双击课程表显示对应学生分数
+        // 双击课程表事件
         courseListTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    //获得行位置
+                    // 显示对应学生分数
                     int row = ((JTable) e.getSource()).rowAtPoint(e.getPoint());
-                    System.out.println("双击了\n" + courseProfiles[row] + "\n");
                     updateCourseScoreTable(courseProfiles[row].id);
                 }
             }
         });
 
+        // 保存新课程
+        saveCourseButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String[][] data = JTableHelper.loadJTableToProfile(newCourseTable, 1);
+
+                boolean isNone = true;
+                for (String field :
+                        data[0]) {
+                    isNone = null == field;
+                }
+
+                if (isNone) {
+                    return;
+                }
+
+                // 添加新课程
+                boolean createdSuccess = CourseMgr.getSingleton().addCourse(
+                        data[0][0].trim(),
+                        Integer.parseInt(data[0][1].trim()),
+                        Integer.parseInt(data[0][2].trim()),
+                        data[0][3].trim()
+                );
+
+                if (createdSuccess) {
+                    JOptionPane.showMessageDialog(mainFrame, "保存成功", "提示", JOptionPane.DEFAULT_OPTION);
+                    JTableHelper.addTitleToJTable(newCourseTable, NEW_COURSE_DETAIL_TITLE);
+                    init();
+                }
+            }
+        });
+
+        // 保存学生信息按钮点击事件
+        saveStudentTableButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StuMgr.getSingleton().addStudent()
+            }
+        });
     }
 
-    // 刷新学生信息界面
-    private void updateWinProfile() {
+    // 显示学生信息界面信息
+    private void setWinProfile() {
 
         if (null == superuserProfile) {
             return;
@@ -92,10 +149,17 @@ public class SuperuserHomeWin {
 
     // 初始化界面
     private void init() {
+        // 获取数据
         superuserProfile = StuMgr.getSingleton().getSuperuserProfile();
         courseProfiles = CourseMgr.getSingleton().getAllCourseList();
+        classProfiles = ClassMgr.getSingleton().getAllClassList();
 
-        updateWinProfile();
+        // 给表格设置标题
+        JTableHelper.addTitleToJTable(studentDetailProfileTable, NEW_STUDENT_DETAIL_TITLE);
+        JTableHelper.addTitleToJTable(newCourseTable, NEW_COURSE_DETAIL_TITLE);
+        JComboBoxHelper.addClassProfilesToJComboBox(classComboBox, classProfiles);
+
+        setWinProfile();
     }
 
     public SuperuserHomeWin() {

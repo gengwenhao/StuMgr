@@ -82,7 +82,7 @@ class DBConnection {
 public class DBHelper extends DBConnection {
     // 查看学生列表
     public ResultSet getStudentList() {
-        return getQuery("SELECT sno, sname FROM student;");
+        return getQuery("SELECT sid,sno, sname FROM student;");
     }
 
     // 登录
@@ -150,7 +150,7 @@ public class DBHelper extends DBConnection {
 
     // 查看学生基本信息
     public ResultSet selectStuProfile(int id) {
-        String sql = "SELECT sno,sname,sgender,name,age,address,mobile,email FROM student s left join class c on s.class_id=c.cid WHERE sid=" + id + ";";
+        String sql = "SELECT sid,sno,sname,sgender,name,age,address,mobile,email FROM student s left join class c on s.class_id=c.cid WHERE sid=" + id + ";";
         return getQuery(sql);
     }
 
@@ -162,7 +162,7 @@ public class DBHelper extends DBConnection {
 
     // 查看学生选课bySID
     public ResultSet selectCourseList(int studentID) {
-        String sql = "SELECT cname,cperiod_expriment,credit,ctype FROM course c right join student_course sc on c.cid=sc.cid WHERE sid=" + studentID + ";";
+        String sql = "SELECT c.cid,cname,cperiod_expriment,credit,ctype FROM course c right join student_course sc on c.cid=sc.cid WHERE sid=" + studentID + ";";
         return getQuery(sql);
     }
 
@@ -219,7 +219,7 @@ public class DBHelper extends DBConnection {
     //查看班级列表
     //SELECT name FROM class;
     public ResultSet selectClassList() {
-        String sql = "SELECT name FROM class";
+        String sql = "SELECT cid,name FROM class";
         return getQuery(sql);
     }
 

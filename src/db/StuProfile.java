@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StuProfile {
+    public String sid;
     public String sno;
     public String name;
     public int gender;
@@ -18,6 +19,7 @@ public class StuProfile {
         try {
             if (rs.next()) {
                 StuProfile profile = new StuProfile();
+                profile.sid = rs.getString("sid");
                 profile.sno = rs.getString("sno");
                 profile.name = rs.getString("sname");
                 profile.gender = rs.getInt("sgender");

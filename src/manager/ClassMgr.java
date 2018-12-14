@@ -1,5 +1,8 @@
 package manager;
 
+import db.ClassProfile;
+import db.CourseProfile;
+
 public class ClassMgr {
     private static ClassMgr instance;
     private static MainStatus status;
@@ -24,5 +27,13 @@ public class ClassMgr {
             return status.db.addClass(ClassName);
         }
         return false;
+    }
+
+    // 获取所有班级的信息
+    public ClassProfile[] getAllClassList() {
+        if (status.isLogin) {
+            return ClassProfile.getProfile(status.db.selectClassList());
+        }
+        return null;
     }
 }
