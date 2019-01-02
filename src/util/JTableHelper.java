@@ -3,11 +3,8 @@ package util;
 import db.CourseProfile;
 import db.ScoreProfile;
 import db.StuProfile;
-import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.Vector;
 

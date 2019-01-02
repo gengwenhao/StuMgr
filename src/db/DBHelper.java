@@ -4,7 +4,7 @@ import java.sql.*;
 
 class DBConnection {
     private final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private final static String DB_URL = "jdbc:mysql://62.234.121.94/stuMgr" + "?useSSL=false&characterEncoding=utf8";
+    private final static String DB_URL = "jdbc:mysql://localhost/stuMgr" + "?useSSL=false&characterEncoding=utf8";
     private final static String USER = "root";
     private final static String PWD = "13945657337xX";
 
